@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/css/settings.css">
+<link rel="stylesheet" href="/static/css/bulma-tooltip.min.css">
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container is-max-desktop">
+  <div id="messages" class="is-fullwidth">
+    <!-- Fill with JQuery -->
+  </div>
+  <br>
+  <div id="info-bar" class="notification is-info is-light has-text-black is-fullwidth">
+    <p>Загружаю ...</p>
+  </div>
+</div>
+<br>
+
+<div
+id="connection-status-tooltip"
+class="has-tooltip-multiline"
+data-tooltip="Соединение устанавливается"
+>
+<button id="connection-status-button" class="button is-loading">
+  <i id="success-connection-icon" class="fas fa-check-circle"></i>
+  <i id="failure-connection-icon" class="fas fa-exclamation-circle"></i>
+</button>
+</div>
+<br>
+<h1 class="title">
+  Welcome, {{ username }}!
+</h1>
+<div class="overlay"></div>
+
+<div class="column is-4 is-offset-4">
+  <div class="is-grouped">
+    <button id="bot-status" class="button is-hovered is-block is-large is-fullwidth is-loading is-waiting">Загружаю ...</button>
+    <br>
+
+    <div class="field has-addons">
+
+      <div class="control has-icons-left has-icons-right">
+        <input id="day-money-limit" class="input" type="number" placeholder="Дневной лимит">
+        <span class="icon is-left">
+          <i class="fas fa-ruble-sign"></i>
+        </span>
+      </div>
+      <div class="control">
+        <button id="update-day-limit" class='button is-block has-text-grey' disabled>Сохранено</button>
+      </div>
+
+    </div>
+
+    <br>
+    <div class="columns is-gapless is-multiline is-mobile">
+      <div class="column">
+        Средств осталось:
+      </div>
+      <div class="column">
+        <span id="money-left">
+          Загружаю ...
+        </span>
+
+        <i class="fas fa-ruble-sign"></i>
+      </div>
+    </div>
+    <br>
+    <a href=# ><button id="manage_bot" class='button is-block is-info is-large is-fullwidth'>Запустить</button></a>
+  </div>
+</div>
+<br>
+<div class="container is-max-desktop">
+  <table id="leads-table" class="table is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>URL Заявки</th>
+        <th>Время покупки</th>
+      </tr>
+    </thead>
+    <tbody id="leads-table-body" >
+      {% for lead in purchased_leads %}
+        <tr>
+          <td> <a href="https://my.cian.ru/leads/{{ lead.id }}/" target="_blank" >https://my.cian.ru/leads/{{ lead.id }}/</a> </td>
+          <td> {{ lead.created_on }} </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+<div id="enter-phone-code" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+
+    <div id="enter-phone-code-messages" class="notification is-info is-light has-text-black is-fullwidth">
+      <p>Пожалуйста, введите код для входа в ЦИАН</p>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <input id="phone-code" class="input" type="number" placeholder="Код подтверждения">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  // @weq qwe qweqwe
+
+  const SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+</script>
+
+<script src="/static/js/common.js"></script>
+<script src="/static/js/const.js"></script>
+<script src="/static/js/functions.js"></script>
+<script src="/static/js/index.js"></script>
+
+{% endblock %}
